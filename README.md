@@ -1,11 +1,11 @@
-# easy-timer
+# easy-queuer
 
 A simple queuer with timeout and interval wrappers for easier removal.
 
 ## Installation
 
 ```
-npm i easy-timer
+npm i easy-queuer
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ npm i easy-timer
 Both return a `remove()` function for `clearTimeout()` and `clearInterval()` respectively. Very useful in React useEffect hooks.
 
 ```js
-import { timer, interval } from 'easy-timer'
+import { timer, interval } from 'easy-queuer'
 
 useEffect(timer(() => render(), 1000).remove, [...deps])
 useEffect(interval(() => render(), 1000).remove, [...deps])
@@ -30,7 +30,7 @@ Creates a timer that will never run more than the interval you set.
 It was useful for me when I had to limit my canvas drawings in a React component with some variables that were changed too often.
 
 ```js
-import { makeQueuer } from 'easy-timer'
+import { makeQueuer } from 'easy-queuer'
 
 const queuer = useMemo(() => makeQueuer(100), [])
 ...

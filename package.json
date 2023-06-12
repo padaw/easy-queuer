@@ -1,7 +1,7 @@
 {
-  "name": "easy-timer",
+  "name": "easy-queuer",
   "version": "1.0.0",
-  "description": "Simple wrappers for setTimeout and setInterval for easier removal.",
+  "description": "A simple queuer with timeout and interval wrappers for easier removal.",
   "scripts": {
     "build": "tsc",
     "test": "npm run build && jest"
@@ -9,7 +9,7 @@
   "types": "types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/padaw/easy-timer.git"
+    "url": "https://github.com/padaw/easy-queuer.git"
   },
   "keywords": [
     "timer",
