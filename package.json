@@ -7,6 +7,10 @@
     "test": "npm run build && jest"
   },
   "types": "types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/padaw/easy-timer.git"
+  },
   "keywords": [
     "timer",
     "timeout",
