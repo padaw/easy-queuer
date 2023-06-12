@@ -27,7 +27,7 @@ useEffect(interval(() => render(), 1000).remove, [...deps])
 
 Creates a timer that will never run more than the interval you set.
 
-It was useful for me when I had to limit my canvas drawings in a React component with some variables that were changed too often.
+It was useful for me when I had to limit my canvas drawings in a React component with some variables that were changing too often.
 
 ```js
 import { makeQueuer } from 'easy-queuer'
