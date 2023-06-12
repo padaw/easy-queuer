@@ -1,0 +1,48 @@
+# easy-timer
+
+A simple queuer with timeout and interval wrappers for easier removal.
+
+## Installation
+
+```
+npm i easy-timer
+```
+
+## Usage
+
+### timer()
+
+### interval()
+
+Both return a `remove()` function for `clearTimeout()` and `clearInterval()` respectively. Very useful in React useEffect hooks.
+
+```js
+import { timer, interval } from 'easy-timer'
+
+useEffect(timer(() => render(), 1000).remove, [...deps])
+useEffect(interval(() => render(), 1000).remove, [...deps])
+```
+
+### makeQueuer()
+
+Creates a timer that will never run more than the interval you set.
+
+It was useful for me when I had to limit my canvas drawings in a React component with some variables that were changed too often.
+
+```js
+import { makeQueuer } from 'easy-timer'
+
+const queuer = useMemo(() => makeQueuer(100), [])
+...
+useEffect(() => queuer.push(drawCanvas), [...deps])
+```
+
+In the example above, `drawCanvas()` method is never called more than 10 times a second and will always use the latest state when it actually
+draws the canvas.
+
+```js
+useEffect(() => queuer.push(drawCanvas, true), [...importantDeps])
+```
+
+It is possible to override the timer when a very important variable is changed. Calling `push()` with the second argument set to `true` will call
+`drawCanvas()` instantly.

@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "declaration": true,
+    "declarationDir": "./types",
+    "target": "ES5",
+    "strict": true,
+    "rootDir": "./src",
+    "outDir": "./dist"
+  }
+}
