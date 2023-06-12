@@ -6,6 +6,7 @@
     "build": "tsc",
     "test": "npm run build && jest"
   },
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
