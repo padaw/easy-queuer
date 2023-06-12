@@ -1,6 +1,6 @@
 {
   "name": "easy-queuer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple queuer with timeout and interval wrappers for easier removal.",
   "scripts": {
     "build": "tsc",
