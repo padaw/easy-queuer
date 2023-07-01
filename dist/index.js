@@ -26,6 +26,10 @@ function makeQueuer(time) {
             if (!timeout || instant)
                 timeout = timer(handler, instant ? 1 : time);
         },
+        cancel: function () {
+            if (timeout)
+                timeout.remove();
+        },
     };
 }
 exports.makeQueuer = makeQueuer;

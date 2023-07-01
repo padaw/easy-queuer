@@ -21,6 +21,9 @@ export function makeQueuer(time: number) {
       if (instant && timeout) timeout.remove()
       if (!timeout || instant) timeout = timer(handler, instant ? 1 : time)
     },
+    cancel: () => {
+      if (timeout) timeout.remove()
+    },
   }
 }
 

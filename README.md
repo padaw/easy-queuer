@@ -25,9 +25,9 @@ useEffect(interval(() => render(), 1000).remove, [...deps])
 
 ### makeQueuer()
 
-Creates a timer that will never run more than the interval you set.
+Creates a queuer that will never run the functions you pass to it more frequently than the interval you set.
 
-It was useful for me when I had to limit my canvas drawings in a React component with some variables that were changing too often.
+It was useful for me when I had to limit my canvas drawings in a React component which had variables that were changing too often.
 
 ```js
 import { makeQueuer } from 'easy-queuer'
@@ -37,7 +37,7 @@ const queuer = useMemo(() => makeQueuer(100), [])
 useEffect(() => queuer.push(drawCanvas), [...deps])
 ```
 
-In the example above, `drawCanvas()` method is never called more than 10 times a second and will always use the latest state when it actually
+In the example above, `drawCanvas()` method is never called more than 10 times per second and will always use the latest state when it actually
 draws the canvas.
 
 ```js
