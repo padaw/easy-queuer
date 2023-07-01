@@ -27,8 +27,10 @@ function makeQueuer(time) {
                 timeout = timer(handler, instant ? 1 : time);
         },
         cancel: function () {
-            if (timeout)
+            if (timeout) {
                 timeout.remove();
+                timeout = null;
+            }
         },
     };
 }
