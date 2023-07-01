@@ -22,7 +22,10 @@ export function makeQueuer(time: number) {
       if (!timeout || instant) timeout = timer(handler, instant ? 1 : time)
     },
     cancel: () => {
-      if (timeout) timeout.remove()
+      if (timeout) {
+        timeout.remove()
+        timeout = null
+      }
     },
   }
 }
