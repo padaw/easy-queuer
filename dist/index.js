@@ -36,6 +36,7 @@ function makeQueuer(interval) {
         cancel: function () {
             if (timeout) {
                 timeout.remove();
+                timeout = undefined;
             }
             pending = undefined;
         },
