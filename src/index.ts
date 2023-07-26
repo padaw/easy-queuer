@@ -34,6 +34,7 @@ export function makeQueuer(interval: number): EasyQueuer {
         cancel() {
             if (timeout) {
                 timeout.remove();
+                timeout = undefined;
             }
             pending = undefined;
         },
