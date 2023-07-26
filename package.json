@@ -1,6 +1,6 @@
 {
     "name": "easy-queuer",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "A simple queuer with timeout and interval wrappers for easier removal.",
     "scripts": {
         "build": "tsc",
@@ -16,8 +16,8 @@
         "timer",
         "timeout",
         "interval",
-        "react-timer",
-        "queuer"
+        "queuer",
+        "queue"
     ],
     "author": "Enes Atik <padavatik@gmail.com>",
     "license": "ISC",

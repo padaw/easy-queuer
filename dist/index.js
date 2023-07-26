@@ -11,26 +11,33 @@ function interval(action, time) {
     return { remove: function () { return clearInterval(interval); } };
 }
 exports.interval = interval;
-function makeQueuer(time) {
+function makeQueuer(interval) {
     var timeout;
     var pending;
-    var handler = function () {
-        pending();
-        timeout = null;
-    };
+    function handler() {
+        if (pending) {
+            pending();
+        }
+        timeout = undefined;
+    }
     return {
-        push: function (act, instant) {
-            pending = act;
-            if (instant && timeout)
-                timeout.remove();
-            if (!timeout || instant)
-                timeout = timer(handler, instant ? 1 : time);
+        push: function (action, isInstant) {
+            if (isInstant) {
+                this.cancel();
+                action();
+            }
+            else {
+                pending = action;
+                if (!timeout) {
+                    timeout = timer(handler, interval);
+                }
+            }
         },
         cancel: function () {
             if (timeout) {
                 timeout.remove();
-                timeout = null;
             }
+            pending = undefined;
         },
     };
 }

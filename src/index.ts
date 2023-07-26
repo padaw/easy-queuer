@@ -8,29 +8,43 @@ export function interval(action: TimerHandler, time: number): RemovableHandler {
     return { remove: () => clearInterval(interval) };
 }
 
-export function makeQueuer(time: number) {
-    let timeout: RemovableHandler | null;
-    let pending: () => any;
-    const handler = () => {
-        pending();
-        timeout = null;
-    };
+export function makeQueuer(interval: number): EasyQueuer {
+    let timeout: RemovableHandler | undefined;
+    let pending: (() => any) | undefined;
+
+    function handler() {
+        if (pending) {
+            pending();
+        }
+        timeout = undefined;
+    }
+
     return {
-        push: (act: () => any, instant?: boolean) => {
-            pending = act;
-            if (instant && timeout) timeout.remove();
-            if (!timeout || instant)
-                timeout = timer(handler, instant ? 1 : time);
+        push(action: () => any, isInstant?: boolean) {
+            if (isInstant) {
+                this.cancel();
+                action();
+            } else {
+                pending = action;
+                if (!timeout) {
+                    timeout = timer(handler, interval);
+                }
+            }
         },
-        cancel: () => {
+        cancel() {
             if (timeout) {
                 timeout.remove();
-                timeout = null;
             }
+            pending = undefined;
         },
     };
 }
 
 export interface RemovableHandler {
     remove: () => void;
+}
+
+export interface EasyQueuer {
+    push(action: () => any, isInstant?: boolean): void;
+    cancel(): void;
 }
