@@ -1,15 +1,15 @@
 const easyTimer = require("../dist/index.js");
 
-test("remove() clears a timer/interval", (done) => {
+test("return function clears a timer/interval", (done) => {
     let a = 100;
-    const timer = easyTimer.timer(() => {
+    const timerCleanup = easyTimer.timer(() => {
         a = 0;
     }, 50);
-    const interval = easyTimer.interval(() => {
+    const intervalCleanup = easyTimer.interval(() => {
         a = 0;
     }, 50);
-    timer.remove();
-    interval.remove();
+    timerCleanup();
+    intervalCleanup();
     setTimeout(() => {
         try {
             expect(a).toBe(100);
@@ -23,13 +23,13 @@ test("remove() clears a timer/interval", (done) => {
 test("calls to makeQueuer() don't exceed the interval", (done) => {
     let a = 0;
     const queue = easyTimer.makeQueuer(40);
-    const interval = easyTimer.interval(() => {
+    const intervalCleanup = easyTimer.interval(() => {
         queue.push(() => {
             a += 1;
         });
     }, 10);
     setTimeout(() => {
-        interval.remove();
+        intervalCleanup();
         try {
             expect(a).toBe(2);
             done();

@@ -1,22 +1,22 @@
-export function timer(action: TimerHandler, time: number): RemovableHandler {
+export function timer(action: TimerHandler, time: number): () => void {
     const timer = setTimeout(action, time);
-    return { remove: () => clearTimeout(timer) };
+    return () => clearTimeout(timer)
 }
 
-export function interval(action: TimerHandler, time: number): RemovableHandler {
+export function interval(action: TimerHandler, time: number): () => void {
     const interval = setInterval(action, time);
-    return { remove: () => clearInterval(interval) };
+    return () => clearInterval(interval)
 }
 
 export function makeQueuer(interval: number): EasyQueuer {
-    let timeout: RemovableHandler | undefined;
+    let cleanup: (() => void) | undefined;
     let pending: (() => any) | undefined;
 
     function handler() {
         if (pending) {
             pending();
         }
-        timeout = undefined;
+        cleanup = undefined;
     }
 
     return {
@@ -26,23 +26,19 @@ export function makeQueuer(interval: number): EasyQueuer {
                 action();
             } else {
                 pending = action;
-                if (!timeout) {
-                    timeout = timer(handler, interval);
+                if (!cleanup) {
+                    cleanup = timer(handler, interval);
                 }
             }
         },
         cancel() {
-            if (timeout) {
-                timeout.remove();
-                timeout = undefined;
+            if (cleanup) {
+                cleanup()
+                cleanup = undefined;
             }
             pending = undefined;
         },
     };
-}
-
-export interface RemovableHandler {
-    remove: () => void;
 }
 
 export interface EasyQueuer {

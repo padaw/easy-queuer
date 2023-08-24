@@ -3,22 +3,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.makeQueuer = exports.interval = exports.timer = void 0;
 function timer(action, time) {
     var timer = setTimeout(action, time);
-    return { remove: function () { return clearTimeout(timer); } };
+    return function () { return clearTimeout(timer); };
 }
 exports.timer = timer;
 function interval(action, time) {
     var interval = setInterval(action, time);
-    return { remove: function () { return clearInterval(interval); } };
+    return function () { return clearInterval(interval); };
 }
 exports.interval = interval;
 function makeQueuer(interval) {
-    var timeout;
+    var cleanup;
     var pending;
     function handler() {
         if (pending) {
             pending();
         }
-        timeout = undefined;
+        cleanup = undefined;
     }
     return {
         push: function (action, isInstant) {
@@ -28,15 +28,15 @@ function makeQueuer(interval) {
             }
             else {
                 pending = action;
-                if (!timeout) {
-                    timeout = timer(handler, interval);
+                if (!cleanup) {
+                    cleanup = timer(handler, interval);
                 }
             }
         },
         cancel: function () {
-            if (timeout) {
-                timeout.remove();
-                timeout = undefined;
+            if (cleanup) {
+                cleanup();
+                cleanup = undefined;
             }
             pending = undefined;
         },
